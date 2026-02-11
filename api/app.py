@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3
+import os
 from addiction_logic import detect_addiction
 
 app = Flask(__name__)
 
 def get_db():
-    return sqlite3.connect("database.db")
+    db_path = os.path.join("/tmp", "database.db")
+    return sqlite3.connect(db_path)
+
 
 def init_db():
     conn = get_db()
@@ -67,5 +70,3 @@ def api_analyze():
     )
     return jsonify({"risk_level": risk})
 
-if __name__ == "__main__":
-    app.run(debug=True)
