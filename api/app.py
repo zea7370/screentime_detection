@@ -3,7 +3,14 @@ import sqlite3
 import os
 from addiction_logic import detect_addiction
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static")
+)
+
 
 def get_db():
     db_path = os.path.join("/tmp", "database.db")
