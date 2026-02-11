@@ -1,0 +1,109 @@
+/* Adding a digital high-tech background image */
+body {
+    background: linear-gradient(rgba(10, 15, 31, 0.8), rgba(0, 0, 0, 0.9)),
+                url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh; /* Changed from height: 100vh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #00f7ff;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 40px 0; /* Added padding so the card doesn't hit the screen edges */
+    overflow-y: auto; /* Changed from overflow: hidden to allow vertical scrolling */
+}
+
+/* Glassmorphism Card Effect */
+.card {
+    background: rgba(10, 15, 31, 0.7);
+    backdrop-filter: blur(12px); /* Blurs the background behind the card */
+    padding: 40px;
+    width: 420px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid rgba(0, 247, 255, 0.2);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+h1 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px rgba(0, 247, 255, 0.6);
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #008c91;
+    color: #00f7ff;
+    border-radius: 8px;
+    box-sizing: border-box;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #00f7ff;
+    box-shadow: 0 0 15px rgba(0, 247, 255, 0.2);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #008c91 0%, #4b0099 100%);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    box-shadow: 0 0 25px rgba(127, 0, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+/* Enhanced Status Glows for result.html */
+.glow { border-width: 2px; }
+.glow.low { box-shadow: 0 0 50px rgba(0, 255, 127, 0.25); border-color: #00ff7f; }
+.glow.moderate { box-shadow: 0 0 50px rgba(255, 240, 0, 0.2); border-color: #fff000; }
+.glow.high { box-shadow: 0 0 50px rgba(255, 0, 64, 0.35); border-color: #ff0040; }
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    color: #00f7ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.back:hover { opacity: 1; }
+.react-warning {
+    color: #ff0040;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+.chart-small {
+    width: 950px;
+    height: 350px;
+    margin: 40px auto;
+}
+
+.chart-small canvas {
+    width: 100% !important;
+    height: 100% !important;
+}

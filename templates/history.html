@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Usage Statistics</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .card-large { width: 90%; max-width: 1100px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; color: #00f7ff; }
+        th { border-bottom: 2px solid #008c91; padding: 12px; text-transform: uppercase; font-size: 0.8rem; }
+        td { padding: 12px; border-bottom: 1px solid rgba(0, 247, 255, 0.1); font-size: 0.9rem; }
+        .tag { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.7rem; }
+        .tag-high { background: rgba(255, 0, 64, 0.2); color: #ff0040; border: 1px solid #ff0040; }
+        .tag-moderate { background: rgba(255, 240, 0, 0.2); color: #fff000; border: 1px solid #fff000; }
+        .tag-low { background: rgba(0, 255, 127, 0.2); color: #00ff7f; border: 1px solid #00ff7f; }
+
+        canvas {
+            margin-top: 40px;
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card card-large">
+    <h1>📊 Behavioral Usage Logs</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Screen Time</th>
+                <th>Social Media</th>
+                <th>App Opens</th>
+                <th>Night Usage</th>
+                <th>Risk Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log[1] }} hrs</td>
+                <td>{{ log[2] }} hrs</td>
+                <td>{{ log[3] }}</td>
+                <td>{{ log[4]|capitalize }}</td>
+                <td>
+                    <span class="tag tag-{{ log[5].split(' ')[0]|lower }}">
+                        {{ log[5] }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Charts Section -->
+    <h2 style="margin-top:40px;">📈 Usage Analytics</h2>
+
+    <canvas id="screenChart"></canvas>
+    <canvas id="socialChart"></canvas>
+    <div class="chart-small">
+    <canvas id="riskChart"></canvas>
+</div>
+
+
+    <a href="/" class="back">← Back to Analyzer</a>
+</div>
+
+<script>
+    const logs = {{ logs|tojson }};
+
+    const labels = logs.map((_, index) => "Entry " + (index + 1));
+    const screenData = logs.map(log => log[1]);
+    const socialData = logs.map(log => log[2]);
+    const riskLevels = logs.map(log => log[5]);
+
+    // Count risk distribution
+    let riskCount = { Low: 0, Moderate: 0, High: 0 };
+    riskLevels.forEach(risk => {
+        if (risk.includes("Low")) riskCount.Low++;
+        else if (risk.includes("Moderate")) riskCount.Moderate++;
+        else if (risk.includes("High")) riskCount.High++;
+    });
+
+    // Screen Time Line Chart
+    new Chart(document.getElementById("screenChart"), {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Screen Time (hrs)",
+                data: screenData,
+                borderWidth: 2
+            }]
+        }
+    });
+
+    // Social Media Bar Chart
+    new Chart(document.getElementById("socialChart"), {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Social Media Time (hrs)",
+                data: socialData,
+                borderWidth: 1
+            }]
+        }
+    });
+
+    // Risk Distribution Pie Chart
+new Chart(document.getElementById("riskChart"), {
+    type: "pie",
+    data: {
+        labels: ["Low", "Moderate", "High"],
+        datasets: [{
+            label: "Risk Distribution",
+            data: [riskCount.Low, riskCount.Moderate, riskCount.High]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Risk Distribution",
+                font: {
+                    size: 18
+                }
+            },
+            legend: {
+                position: "bottom"
+            }
+        }
+    }
+});
+</script>
+
+</body>
+</html>

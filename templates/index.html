@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Addiction Detector</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="card">
+    <h1>🛡️ AI Addiction Shield</h1>
+    <p style="font-size: 0.8rem; opacity: 0.6;">
+        ANALYZING DIGITAL BEHAVIORAL PATTERNS
+    </p>
+
+    <form method="POST" action="/analyze">
+        <input type="number" step="0.1" name="screen_time" placeholder="Total Screen Time (Hrs)" required>
+        <input type="number" step="0.1" name="social_time" placeholder="Social Media Usage (Hrs)" required>
+        <input type="number" name="app_opens" placeholder="App Opens per Day" required>
+
+        <select name="night_usage">
+            <option value="no">Daytime Focus Only</option>
+            <option value="yes">Frequent Night Usage</option>
+        </select>
+
+        <button type="submit">Initialize Analysis</button>
+    </form>
+
+    <div id="react-warning"></div>
+</div>
+
+<!-- React CDN -->
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<div id="react-warning"></div>
+
+<script type="text/babel">
+function WarningNotification() {
+    const [warning, setWarning] = React.useState("");
+
+    // expose setter to normal JS
+    window.setReactWarning = setWarning;
+
+    return (
+        <div className="react-warning">
+            {warning}
+        </div>
+    );
+}
+
+ReactDOM.createRoot(document.getElementById("react-warning"))
+    .render(<WarningNotification />);
+</script>
+
+<!-- Your JS -->
+<script src="/static/app.js"></script>
+
+</body>
+</html>
